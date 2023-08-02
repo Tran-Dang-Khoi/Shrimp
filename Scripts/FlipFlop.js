@@ -47,7 +47,7 @@ function init(c) {
     flipCounter = 0;
     var minutes = 10;
     var display = document.getElementById("Timer");
-    
+
     blockFrontImages = ["Images/pokemon1.gif",
         "Images/pokemon2.gif",
         "Images/pokemon3.gif",
@@ -140,7 +140,6 @@ function flipBlock() {
                     gameOn = false;
                     var wait = ms => new Promise(resolve => setTimeout(resolve, ms));
                     Promise.resolve(800).then(() => wait(800)).then(() => { revertFlip(); });
-
                 }
             }
         }
