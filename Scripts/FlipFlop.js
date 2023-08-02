@@ -10,8 +10,12 @@ overlays.forEach(overlay => {
     overlay.addEventListener('click', () => {
         overlay.classList.remove('visible');
         resetGame();
-        init();
-        
+        c = prompt("Number of cards: ");
+        while (c % 2 == 1) {
+            alert("Even numbers only");
+            c = prompt("Number of cards: ");
+        }
+        init(c);
     });
 });
 
@@ -26,24 +30,25 @@ function startCountdown() {
 
 function resetGame() {
     var elements = document.getElementsByClassName("block");
-        while (elements.length > 0) {
-            elements[0].parentNode.removeChild(elements[0]);
-        }
+    while (elements.length > 0) {
+        elements[0].parentNode.removeChild(elements[0]);
+    }
 }
 
-function init() { 
+function init(c) {
     //initializing values
     gameOn = true;
-     memoryBlockArr = new Array(18);
-     blocksArray = [];
-     blockFrontImagesAll = [];
-     shuffledBlocks = [];
-     currentlyFlippedArr = [];
-     matchedCount = 0;     
-     flipCounter = 0;
-     var minutes = 10;
-     var display = document.getElementById("Timer");
-     blockFrontImages = ["Images/pokemon1.gif",
+    memoryBlockArr = new Array(c);
+    blocksArray = [];
+    blockFrontImagesAll = [];
+    shuffledBlocks = [];
+    currentlyFlippedArr = [];
+    matchedCount = 0;
+    flipCounter = 0;
+    var minutes = 10;
+    var display = document.getElementById("Timer");
+    
+    blockFrontImages = ["Images/pokemon1.gif",
         "Images/pokemon2.gif",
         "Images/pokemon3.gif",
         "Images/pokemon4.gif",
@@ -51,7 +56,7 @@ function init() {
         "Images/pokemon6.gif",
         "Images/pokemon7.gif",
         "Images/pokemon8.gif",
-        "Images/pokemon9.gif"];
+        "Images/pokemon9.gif",];
     // init();
     startTimer(minutes, display);
     blockFrontImagesAll = blockFrontImages.concat(blockFrontImages);
@@ -94,8 +99,8 @@ function createElements() {
 function hideElements() {
     hideBlocks = Array.from(document.getElementsByClassName('block'));
     for (var i = 0; i < hideBlocks.length; i++) {
-        document.getElementById(hideBlocks[i].id).classList.remove('visible'); 
-    } 
+        document.getElementById(hideBlocks[i].id).classList.remove('visible');
+    }
 }
 
 function shuffleBlocks(blocksArray) {
@@ -148,21 +153,21 @@ function blocksMatched() {
     document.getElementById(blockToMatch1).removeEventListener('click', flipBlock);
     document.getElementById(blockToMatch2).removeEventListener('click', flipBlock);
     if (matchedCount === memoryBlockArr.length) {
-       // if (matchedCount === 2) {
+        // if (matchedCount === 2) {
         var wait = ms => new Promise(resolve => setTimeout(resolve, ms));
-        Promise.resolve(1000).then(() => wait(1000)).then(() => { showWin(); });        
+        Promise.resolve(1000).then(() => wait(1000)).then(() => { showWin(); });
     }
 }
 
 function revertFlip() {
-   // alert(blockToMatch1 + "  trying to revert  " + blockToMatch2);
+    // alert(blockToMatch1 + "  trying to revert  " + blockToMatch2);
     document.getElementById(blockToMatch1).classList.remove('visible');
     document.getElementById(blockToMatch2).classList.remove('visible');
     currentlyFlippedArr = [];
     gameOn = true;
 }
 
-function showWin() {    
+function showWin() {
     hideElements();
     gameOn = false;
     document.getElementById('winText').classList.add('visible');
@@ -170,7 +175,7 @@ function showWin() {
 }
 
 function gameOver() {
-   // hideElements();
+    // hideElements();
     gameOn = false;
     document.getElementById('gameOverText').classList.add('visible');
     clearInterval(countdown);
